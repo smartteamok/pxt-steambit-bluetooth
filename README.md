@@ -174,6 +174,10 @@ pxt build             # compila core.ts, blocks.ts y test.ts
   bloques. Todo dentro del namespace `steambitBluetooth`, para poder
   integrarlo en "STEAMbit 8" sin reescribir.
 - `test.ts`: pruebas del núcleo (si fallan, panic 098; si pasan, ✓).
+  `node tools/run-tests.js` las corre en Node con stubs de la API (el
+  simulador no tiene bluetooth).
+- `node tools/check-blocks.js <programa.ts>`: compila un programa que usa la
+  extensión y lo decompila a bloques; falla si queda algún bloque gris.
 - Traducciones en `_locales/es` y `_locales/pt`. Las claves base se regeneran
   con `pxt gendocs --locs`.
 
