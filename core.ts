@@ -231,7 +231,7 @@ namespace steambitBluetooth {
      * izquierda = y + x + giro, derecha = y − x − giro, acotadas.
      */
     //% hidden=1
-    export function wheelSpeed(left: boolean): number {
+    export function wheelMix(left: boolean): number {
         const turn = joyX + joyRotation
         return clampAxis(left ? joyY + turn : joyY - turn)
     }

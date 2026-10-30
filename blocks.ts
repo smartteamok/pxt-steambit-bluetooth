@@ -212,4 +212,107 @@ namespace steambitBluetooth {
         init()
         setTxGap(ms)
     }
+
+    // ----- Joystick -----
+
+    export enum DpadDirection {
+        //% block="forward"
+        Forward,
+        //% block="backward"
+        Backward,
+        //% block="left"
+        Left,
+        //% block="right"
+        Right,
+        //% block="stopped"
+        Stopped
+    }
+
+    export enum JoystickAxis {
+        //% block="x"
+        X,
+        //% block="y"
+        Y,
+        //% block="rotation"
+        Rotation
+    }
+
+    export enum Wheel {
+        //% block="left"
+        Left,
+        //% block="right"
+        Right
+    }
+
+    export enum AppButton {
+        //% block="A"
+        A,
+        //% block="B"
+        B
+    }
+
+    /**
+     * True if the d-pad of the app (differential drive screen) points this
+     * way. The d-pad sends only a direction, no speed.
+     * @param direction the direction to check
+     */
+    //% blockId=steambit_bt_dpad
+    //% block="app d-pad $direction"
+    //% group="Joystick"
+    //% weight=50 blockGap=8
+    export function dpad(direction: DpadDirection): boolean {
+        init()
+        const code = joystickDirection()
+        switch (direction) {
+            case DpadDirection.Forward: return code == "U"
+            case DpadDirection.Backward: return code == "D"
+            case DpadDirection.Left: return code == "L"
+            case DpadDirection.Right: return code == "R"
+            default: return code != "U" && code != "D" && code != "L" && code != "R"
+        }
+    }
+
+    /**
+     * Position of the 360° joystick of the app (omni drive screen), from
+     * -100 to 100. y is forward/backward, x is left/right, rotation is the
+     * spin control.
+     * @param axis the axis to read
+     */
+    //% blockId=steambit_bt_joystick
+    //% block="app joystick $axis"
+    //% group="Joystick"
+    //% weight=49 blockGap=8
+    export function joystick(axis: JoystickAxis): number {
+        init()
+        if (axis == JoystickAxis.X) return joystickAxis("x")
+        if (axis == JoystickAxis.Y) return joystickAxis("y")
+        return joystickAxis("r")
+    }
+
+    /**
+     * Speed for one wheel of a two-wheel robot driven with the 360°
+     * joystick, from -100 to 100. Plug it into your motor block.
+     * @param wheel the wheel
+     */
+    //% blockId=steambit_bt_wheel_speed
+    //% block="wheel speed $wheel"
+    //% group="Joystick"
+    //% weight=48 blockGap=8
+    export function wheelSpeed(wheel: Wheel): number {
+        init()
+        return wheelMix(wheel == Wheel.Left)
+    }
+
+    /**
+     * True while button A or B of the app joystick screen is pressed.
+     * @param button the app button
+     */
+    //% blockId=steambit_bt_button
+    //% block="app button $button pressed"
+    //% group="Joystick"
+    //% weight=47
+    export function buttonPressed(button: AppButton): boolean {
+        init()
+        return joystickButton(button == AppButton.A ? "A" : "B")
+    }
 }
