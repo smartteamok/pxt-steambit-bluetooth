@@ -1,0 +1,11 @@
+built/
+node_modules/
+pxt_modules/
+*.user
+*.suo
+*.tgz
+.vscode/
+.DS_Store
+# generados por `pxt target microbit`
+package.json
+package-lock.json
