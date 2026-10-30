@@ -109,6 +109,15 @@ lines = steambitBluetooth.pendingLines()
 check(lines.length == 6, "data coalesced, events kept")
 check(lines[3] == "D|temp|21\n", "latest data wins")
 
+steambitBluetooth.sendDataLine("mal nombre", "1", "num")
+steambitBluetooth.sendDataLine("_res", "1", "num")
+steambitBluetooth.sendEventLine("no valido")
+check(steambitBluetooth.pendingLines().length == 6, "invalid labels not sent")
+steambitBluetooth.sendDataLine("msg", "a|b", "text")
+lines = steambitBluetooth.pendingLines()
+check(lines.length == 8 && lines[6] == "R|msg|text|r|\n", "send declares first")
+check(lines[7] == "D|msg|ab\n", "text sanitized")
+
 // Seguridad: al desconectar, joystick detenido y valores conservados.
 steambitBluetooth.handleLine("C|joy|L")
 steambitBluetooth.handleLine("C|jx|40")

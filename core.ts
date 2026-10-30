@@ -370,6 +370,27 @@ namespace steambitBluetooth {
     }
 
     /**
+     * Envía `D|etiqueta|valor` y declara la etiqueta como leída por la app.
+     * type: "num", "bool" o "text". Etiquetas inválidas o reservadas se
+     * ignoran.
+     */
+    //% hidden=1
+    export function sendDataLine(label: string, value: string, type: string): void {
+        if (!isValidLabel(label) || label.charAt(0) == "_") return
+        declare(label, type, "r")
+        enqueue("D|" + label, "D|" + label + "|" + cleanValue(value) + "\n")
+    }
+
+    /**
+     * Envía `E|nombre`. Los eventos no se reemplazan en la cola.
+     */
+    //% hidden=1
+    export function sendEventLine(name: string): void {
+        if (!isValidLabel(name) || name.charAt(0) == "_") return
+        enqueue("", "E|" + name + "\n")
+    }
+
+    /**
      * Encola una línea para enviar a la app. Si key no es vacía y ya hay una
      * línea pendiente con esa clave, la reemplaza. Sin conexión se descarta.
      */
