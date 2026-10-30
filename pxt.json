@@ -1,6 +1,6 @@
 {
     "name": "steambit-bluetooth",
-    "version": "0.3.0",
+    "version": "1.0.0",
     "description": "Blocks to use the STEAMbit app over Bluetooth: app values, d-pad, joystick and buttons",
     "license": "MIT",
     "dependencies": {
@@ -10,7 +10,11 @@
     "files": [
         "README.md",
         "core.ts",
-        "blocks.ts"
+        "blocks.ts",
+        "_locales/es/steambit-bluetooth-strings.json",
+        "_locales/es/steambit-bluetooth-jsdoc-strings.json",
+        "_locales/pt/steambit-bluetooth-strings.json",
+        "_locales/pt/steambit-bluetooth-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
